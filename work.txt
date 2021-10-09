@@ -1,0 +1,32 @@
+istrha header pass krna 
+import axios from "axios";
+or agar token ko localstorage mai save krwana hoto 
+
+
+localStorage.setItem("profile",JSON.stringify(data) )  
+
+const API = axios.create({ baseURL: "http://localhost:8000" });
+API.interceptors.request.use((request) => {
+  if (localStorage.getItem("profile")) {
+    request.headers.authorization = `bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
+    }
+    return request
+});
+
+or phir jaise function banaye the 
+export const fetchPosts = () => API.get("/posts");
+export const createPost = (newPost) => API.post("/posts", newPost);
+export const updatePost = (id, updatedPost) =>
+  API.patch(`/posts/${id}`, updatedPost);
+
+
+  or agar wo error niklna hai to istrha nikaloge
+  catch (error) {
+    alert(
+      error.response && error.response.data.error
+        ? error.response.data.error
+        : error.message
+    );
+  }
